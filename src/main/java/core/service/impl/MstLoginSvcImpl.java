@@ -146,6 +146,7 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 //		if (autenticated) {
 			@SuppressWarnings("unchecked")
 			List<LdapDto> list = lt.search("", filter.encode(),  new core.util.ContactAttributeMapperJSON());
+			System.out.println("check : "+list.get(0));
 			return list;
 //		} else {
 //			return null;
