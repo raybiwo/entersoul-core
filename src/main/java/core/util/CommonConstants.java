@@ -24,6 +24,17 @@ public class CommonConstants {
 	public static final String PREFIX_URI_WS = "/q";
 	public static final String BPM_URI_WS = "/bpm";
 	
+//	public static final String url = "ldap://localhost:389";
+//	public static final String base = "dc=example,dc=com";
+//	public static final String userDn = "cn=Manager,dc=example,dc=com";
+//	public static final String password = "secret";
+	
+	public static final String url = "ldap://10.21.106.16:389";
+	public static final String base = "OU=Vendor,DC=intra,DC=excelcom,DC=co,DC=id";
+	public static final String userDn = "pcf_sa";
+	public static final String password = "$15!n6@M4n6aR47@";
+	public static final String referral = "follow";
+	
 	public static final int SCALE = 2;
 	public static final RoundingMode ROUNDING_MODE_PERSON = RoundingMode.CEILING;
 }

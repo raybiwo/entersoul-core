@@ -2,6 +2,7 @@ package core.service;
 
 import java.util.List;
 
+import core.dto.LdapDto;
 import core.dto.MstKaryawanDto;
 import core.dto.MstLoginDto;
 
@@ -12,4 +13,5 @@ public interface MstLoginSvc {
 	public int save(MstLoginDto isi);
 	public int delete(String kode);
 	public MstKaryawanDto login(MstLoginDto login);
+	public List<LdapDto> loginLdap(MstLoginDto login);
 }

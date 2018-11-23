@@ -1,5 +1,8 @@
 package core.controller;
 
+import java.util.Map;
+
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,12 +14,21 @@ import response.RestResponse;
 import core.dto.MstLoginDto;
 import core.service.MstLoginSvc;
 import core.util.CommonConstants;
+import core.util.JsonUtil;
 
 @RestController
 @RequestMapping("/login")
 public class LoginCtl {
 	@Autowired
 	MstLoginSvc mstLoginSvc;
+	
+	@RequestMapping(value="/loginLdap", method=RequestMethod.POST)
+	public RestResponse loginLdap(@RequestBody MstLoginDto payload) {
+		RestResponse restResponse = new RestResponse();
+		restResponse.setContents(mstLoginSvc.loginLdap(payload));
+		restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+		return restResponse;
+	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST)
 	public RestResponse login(@RequestBody MstLoginDto mstLoginDto) {

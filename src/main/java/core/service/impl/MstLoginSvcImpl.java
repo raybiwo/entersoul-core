@@ -3,14 +3,24 @@ package core.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingEnumeration;
+import javax.naming.NamingException;
+import javax.naming.directory.Attributes;
 import javax.transaction.Transactional;
 
 import ma.glasnost.orika.MapperFacade;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ldap.core.DistinguishedName;
+import org.springframework.ldap.core.LdapTemplate;
+import org.springframework.ldap.core.support.LdapContextSource;
+import org.springframework.ldap.filter.AndFilter;
+import org.springframework.ldap.filter.EqualsFilter;
 import org.springframework.stereotype.Service;
 
 import core.dao.MstLoginDao;
+import core.dto.LdapDto;
 import core.dto.MstKaryawanDto;
 import core.dto.MstLoginDto;
 import core.model.MstKaryawan;
@@ -25,9 +35,7 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 	MstLoginDao mstLoginDao;
 	
 	@Autowired
-	MapperFacade mapperFacade;
-	
-	
+	MapperFacade mapperFacade;	
 	
 	@Override
 	public List<MstLoginDto> getAllLengkap() {
@@ -103,7 +111,7 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 			}
 		}
 	}
-
+	
 	@Override
 	public MstKaryawanDto login(MstLoginDto login) {
 		// TODO Auto-generated method stub
@@ -112,4 +120,44 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 		mstKaryawanDto = mapperFacade.map(mstKaryawan, MstKaryawanDto.class);
 		return mstKaryawanDto;
 	}
+
+	@Override
+	public List<LdapDto> loginLdap(MstLoginDto login) {
+		// TODO Auto-generated method stub
+		LdapContextSource ctxSrc = new LdapContextSource();
+		ctxSrc.setUrl(CommonConstants.url);
+		ctxSrc.setBase(CommonConstants.base);
+		ctxSrc.setUserDn(CommonConstants.userDn);
+		ctxSrc.setPassword(CommonConstants.password);
+		try {
+			ctxSrc.afterPropertiesSet();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		LdapTemplate lt = new LdapTemplate(ctxSrc);
+		
+		//Test Query
+		AndFilter filter = new AndFilter();
+		filter.and(new EqualsFilter("objectclass", "person")).and(new EqualsFilter("mail", login.getUsername()));
+//		@SuppressWarnings("unchecked")
+//		boolean autenticated = lt.authenticate(DistinguishedName.EMPTY_PATH, filter.toString(), login.getPassword());
+//		if (autenticated) {
+			@SuppressWarnings("unchecked")
+			List<LdapDto> list = lt.search("", filter.encode(),  new core.util.ContactAttributeMapperJSON());
+			return list;
+//		} else {
+//			return null;
+//		}	
+	}
+
+//	@Override
+//	public MstKaryawanDto login(MstLoginDto login) {
+//		// TODO Auto-generated method stub
+//		MstKaryawanDto mstKaryawanDto = new MstKaryawanDto();
+//		MstKaryawan mstKaryawan = mstLoginDao.login(login.getUsername(), login.getPassword());
+//		mstKaryawanDto = mapperFacade.map(mstKaryawan, MstKaryawanDto.class);
+//		return mstKaryawanDto;
+//	}
 }
