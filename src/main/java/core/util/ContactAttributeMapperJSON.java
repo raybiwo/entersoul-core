@@ -21,9 +21,6 @@ public class ContactAttributeMapperJSON implements AttributesMapper {
 		List<LdapDto> ldapDtos = new ArrayList<>();
 		LdapDto ldap = new LdapDto();
 		JSONObject jo = new JSONObject();
-//		Map<String, Object> mapping = null;
-//		String test = null;
-//		int i = 0;
 //		jo.put("mail", attributes.get("mail").get());
 		ldap.setEmail(attributes.get("mail").get().toString());
 		ldap.setName(attributes.get("name").get().toString());
