@@ -5,6 +5,7 @@ public class MstLoginDto {
 	private String password;
 	private String username;
 	private String namaKaryawan;
+	private String email;
 	
 	public String getNamaKaryawan() {
 		return namaKaryawan;
@@ -29,5 +30,11 @@ public class MstLoginDto {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

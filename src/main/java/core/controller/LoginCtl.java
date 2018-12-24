@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import response.RestResponse;
+import core.dto.LdapDto;
 import core.dto.MstLoginDto;
 import core.service.MstLoginSvc;
 import core.util.CommonConstants;
@@ -25,8 +26,15 @@ public class LoginCtl {
 	@RequestMapping(value="/loginLdap", method=RequestMethod.POST)
 	public RestResponse loginLdap(@RequestBody MstLoginDto payload) {
 		RestResponse restResponse = new RestResponse();
-		restResponse.setContents(mstLoginSvc.loginLdap(payload));
-		restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+		LdapDto i = mstLoginSvc.loginLdap(payload);
+		if (i == null) {
+			restResponse.setMessage("Email atau password tidak benar");
+			restResponse.setStatus(CommonConstants.ERROR_REST_STATUS);
+		} else {
+			restResponse.setContents(i);
+			restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+		}
+		
 		return restResponse;
 	}
 	

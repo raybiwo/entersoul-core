@@ -4,6 +4,7 @@ public class LdapDto {
 	private String name;
 	private String email;
 	private String mobile;
+	private String mailNickname;
 	public String getName() {
 		return name;
 	}
@@ -21,6 +22,12 @@ public class LdapDto {
 	}
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+	public String getMailNickname() {
+		return mailNickname;
+	}
+	public void setMailNickname(String mailNickname) {
+		this.mailNickname = mailNickname;
 	}
 	
 	

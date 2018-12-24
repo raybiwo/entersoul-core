@@ -3,8 +3,11 @@ package core.model;
 import java.io.Serializable;
 import java.sql.Time;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -14,7 +17,7 @@ import javax.persistence.Table;
 @NamedQuery(name="Attendance.findAll", query="SELECT m FROM Attendance m")
 public class Attendance implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String nik;
 	private String attendanceDate;
 	private Time checkin;
@@ -26,12 +29,14 @@ public class Attendance implements Serializable {
 	}
 
 	@Id
-	@Column(name="ID")
-	public int getId() {
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Basic(optional = false)
+	@Column(name="ID",unique=true, nullable = false)
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

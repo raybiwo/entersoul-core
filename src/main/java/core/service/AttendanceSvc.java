@@ -7,5 +7,13 @@ import core.dto.AttendanceDto;
 public interface AttendanceSvc {
 	public List<AttendanceDto> getAll();
 	
-	public List<AttendanceDto> searchUserAttendance(String nik);
+	public List<AttendanceDto> searchUserAttendance(String nik, String tanggal);
+	
+	public int checkin(AttendanceDto attendanceDto);
+	
+	public int checkout(AttendanceDto attendanceDto);
+	
+	public int statusAttendance(AttendanceDto attendanceDto);
+	
+	public List<AttendanceDto> getAttendance(AttendanceDto attendanceDto);
 }

@@ -3,21 +3,23 @@ package core.dto;
 import java.sql.Time;
 
 public class AttendanceDto {
-	private int id;
+	private Integer id;
 	private String nik;
 	private String attendanceDate;
-	private Time checkin;
-	private Time chekout;
+	private String checkin;
+	private String chekout;
+	private Time checkTime;
 	private String longitude;
 	private String latitude;
 	private String name;
 	private String email;
+	private boolean isCheckin;
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -37,19 +39,19 @@ public class AttendanceDto {
 		this.attendanceDate = attendanceDate;
 	}
 	
-	public Time getCheckin() {
+	public String getCheckin() {
 		return checkin;
 	}
 	
-	public void setCheckin(Time checkin) {
+	public void setCheckin(String checkin) {
 		this.checkin = checkin;
 	}
 	
-	public Time getChekout() {
+	public String getChekout() {
 		return chekout;
 	}
 	
-	public void setChekout(Time chekout) {
+	public void setChekout(String chekout) {
 		this.chekout = chekout;
 	}
 	
@@ -83,6 +85,22 @@ public class AttendanceDto {
 	
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public boolean getIsCheckin() {
+		return isCheckin;
+	}
+
+	public void setIsCheckin(boolean isCheckin) {
+		this.isCheckin = isCheckin;
+	}
+
+	public Time getCheckTime() {
+		return checkTime;
+	}
+
+	public void setCheckTime(Time checkTime) {
+		this.checkTime = checkTime;
 	}
 
 }

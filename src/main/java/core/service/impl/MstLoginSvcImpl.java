@@ -6,6 +6,9 @@ import java.util.List;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
 import javax.naming.directory.Attributes;
+import javax.naming.directory.SearchControls;
+import javax.naming.ldap.InitialLdapContext;
+import javax.naming.ldap.LdapContext;
 import javax.transaction.Transactional;
 
 import ma.glasnost.orika.MapperFacade;
@@ -122,13 +125,36 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 	}
 
 	@Override
-	public List<LdapDto> loginLdap(MstLoginDto login) {
+	public LdapDto loginLdap(MstLoginDto login) {
 		// TODO Auto-generated method stub
 		LdapContextSource ctxSrc = new LdapContextSource();
 		ctxSrc.setUrl(CommonConstants.url);
 		ctxSrc.setBase(CommonConstants.base);
 		ctxSrc.setUserDn(CommonConstants.userDn);
 		ctxSrc.setPassword(CommonConstants.password);
+		String filter = "(&(objectCategory=Person)(sAMAccountName=*)(|"
+				+ "(mail=ASP.ACHMADA@xl.co.id)"
+				+ "(mail=ASP.ANDRIS@xl.co.id)"
+				+ "(mail=Tubagusm@xl.co.id)"
+				+ "(mail=XSIS.HAFIDZA@xl.co.id)"
+				+ "(mail=XSIS.RACHMADI@xl.co.id)"
+				+ "(mail=XSIS.ASTYAB@xl.co.id)"
+				+ "(mail=ajin1@xl.co.id)"
+				+ "(mail=xsis.hanifahtria@xl.co.id)"
+				+ "(mail=XSIS.REINHARTBINSARH@xl.co.id)"
+				+ "(mail=ASEPTAYUDA@xl.co.id)"
+				+ "(mail=asp.jeffryl@xl.co.id)"
+				+ "(mail=ASP.EDWINY@xl.co.id)"
+				+ "(mail=ASP.LINAA@xl.co.id)"
+				+ "(mail=ASP.WENDY@xl.co.id)"
+				+ "(mail=TANKA.RIZKYY@xl.co.id)"
+				+ "(mail=VIM.DENANDRAP@xl.co.id)"
+				+ "(mail=XSIS.HENYS@xl.co.id)"
+				+ "(mail=XSIS.JOSUAD@xl.co.id)"
+				+ "(mail=TISNAK@xl.co.id)"
+				+ "(mail=ASP.NICOR@xl.co.id)"
+				+ "(|(manager=CN=Dyah Sulistyorini,OU=IT Development - Core,OU=Service Management,OU=Directorate,DC=intra,DC=excelcom,DC=co,DC=id)))(mailNickname="+login.getEmail()+"))";
+        
 		try {
 			ctxSrc.afterPropertiesSet();
 		} catch (Exception e) {
@@ -138,27 +164,14 @@ public class MstLoginSvcImpl implements MstLoginSvc {
 		
 		LdapTemplate lt = new LdapTemplate(ctxSrc);
 		
-		//Test Query
-		AndFilter filter = new AndFilter();
-		filter.and(new EqualsFilter("objectclass", "person")).and(new EqualsFilter("mail", login.getUsername()));
-//		@SuppressWarnings("unchecked")
-//		boolean autenticated = lt.authenticate(DistinguishedName.EMPTY_PATH, filter.toString(), login.getPassword());
-//		if (autenticated) {
+		boolean autenticated = lt.authenticate(DistinguishedName.EMPTY_PATH, filter, login.getPassword());
+		
+		if (autenticated) {
 			@SuppressWarnings("unchecked")
-			List<LdapDto> list = lt.search("", filter.encode(),  new core.util.ContactAttributeMapperJSON());
-			System.out.println("check : "+list.get(0));
-			return list;
-//		} else {
-//			return null;
-//		}	
+			List<LdapDto> list = lt.search("", filter,  new core.util.ContactAttributeMapperJSON());			
+			return list.get(0);
+		} else {
+			return null;
+		}	
 	}
-
-//	@Override
-//	public MstKaryawanDto login(MstLoginDto login) {
-//		// TODO Auto-generated method stub
-//		MstKaryawanDto mstKaryawanDto = new MstKaryawanDto();
-//		MstKaryawan mstKaryawan = mstLoginDao.login(login.getUsername(), login.getPassword());
-//		mstKaryawanDto = mapperFacade.map(mstKaryawan, MstKaryawanDto.class);
-//		return mstKaryawanDto;
-//	}
 }

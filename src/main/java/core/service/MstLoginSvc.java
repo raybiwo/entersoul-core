@@ -13,5 +13,5 @@ public interface MstLoginSvc {
 	public int save(MstLoginDto isi);
 	public int delete(String kode);
 	public MstKaryawanDto login(MstLoginDto login);
-	public List<LdapDto> loginLdap(MstLoginDto login);
+	public LdapDto loginLdap(MstLoginDto login);
 }
