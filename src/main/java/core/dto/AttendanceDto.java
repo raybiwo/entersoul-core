@@ -13,6 +13,8 @@ public class AttendanceDto {
 	private String latitude;
 	private String name;
 	private String email;
+	private String total;
+	private String activity;
 	private boolean isCheckin;
 	
 	public Integer getId() {
@@ -102,5 +104,22 @@ public class AttendanceDto {
 	public void setCheckTime(Time checkTime) {
 		this.checkTime = checkTime;
 	}
+
+	public String getTotal() {
+		return total;
+	}
+
+	public void setTotal(String total) {
+		this.total = total;
+	}
+
+	public String getActivity() {
+		return activity;
+	}
+
+	public void setActivity(String activity) {
+		this.activity = activity;
+	}
+	
 
 }

@@ -24,6 +24,8 @@ public class Attendance implements Serializable {
 	private Time chekout;
 	private String longitude;
 	private String latitude;
+	private String hours;
+	private String activity;
 		
 	public Attendance() {
 	}
@@ -94,5 +96,22 @@ public class Attendance implements Serializable {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
-	
+
+	@Column(name="ACTIVITY") 
+	public String getActivity() {
+		return activity;
+	}
+
+	public void setActivity(String activity) {
+		this.activity = activity;
+	}
+
+	@Column(name="HOURS")
+	public String getHours() {
+		return hours;
+	}
+
+	public void setHours(String hours) {
+		this.hours = hours;
+	}	
 }
