@@ -16,4 +16,10 @@ public interface AttendanceSvc {
 	public int statusAttendance(AttendanceDto attendanceDto);
 	
 	public List<AttendanceDto> getAttendance(AttendanceDto attendanceDto);
+	
+	public List<AttendanceDto> getAllWithMember();
+	
+	public List<AttendanceDto> getWithName(String nik);
+	
+	public int save(AttendanceDto isi);
 }

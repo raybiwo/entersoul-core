@@ -15,6 +15,12 @@ public interface AttendanceDao extends JpaRepository<Attendance, String>{
 	@Query("select a from Attendance a")
 	public List<Object> getAll();
 	
+	@Query("select a, b.name, b.mailAddress from Attendance a, Member b where a.nik=b.username")
+	public List<Object[]> getAllWithMember();
+	
+	@Query("select a, b.name, b.mailAddress from Attendance a, Member b where a.nik=:nik and a.nik=b.username")
+	public List<Object[]> getWithName(@Param("nik") String nik);
+	
 	@Query("select a "
 			+ "from Attendance a where a.nik=:nik and a.attendanceDate LIKE '%'||:tanggal||'%'")
 	public List<Object> searchUserAttendance(@Param("nik") String nik, @Param("tanggal") String tanggal);
@@ -34,6 +40,13 @@ public interface AttendanceDao extends JpaRepository<Attendance, String>{
 	public Integer updateCheckout(@Param("checkin") Time checkin, 
 			@Param("longitude") String longitude, 
 			@Param("latitude") String latitude, 
+			@Param("attendance") String attendance,
+			@Param("nik") String nik);
+	
+	@Modifying
+	@Query("UPDATE Attendance a SET a.hours=:hours, a.activity=:activity WHERE a.attendanceDate=:attendance and a.nik=:nik")
+	public Integer updateTimesheet(@Param("hours") String hours, 
+			@Param("activity") String activity,
 			@Param("attendance") String attendance,
 			@Param("nik") String nik);
 	

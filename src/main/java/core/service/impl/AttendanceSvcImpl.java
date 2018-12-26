@@ -139,4 +139,49 @@ public class AttendanceSvcImpl implements AttendanceSvc {
 		attendanceDtos = mapperFacade.mapAsList(obj, AttendanceDto.class);
 		return attendanceDtos;
 	}
+
+	@Override
+	public List<AttendanceDto> getAllWithMember() {
+		// TODO Auto-generated method stub
+		List<AttendanceDto> attendanceDtos = new ArrayList<>();
+		List<Object[]> qr = attendanceDao.getAllWithMember();
+		
+		for (Object[] obj : qr) {
+			AttendanceDto attendanceDto = new AttendanceDto();
+			Attendance mdl = new Attendance();
+			mdl = (Attendance) obj[0];
+			
+			attendanceDto = mapperFacade.map(mdl, AttendanceDto.class);
+			attendanceDto.setName((String) obj[1]);
+			attendanceDto.setEmail((String) obj[2]);
+			attendanceDtos.add(attendanceDto);
+		}
+		return attendanceDtos;
+	}
+
+	@Override
+	public List<AttendanceDto> getWithName(String nik) {
+		// TODO Auto-generated method stub
+		List<AttendanceDto> attendanceDtos = new ArrayList<>();
+		List<Object[]> qr = attendanceDao.getWithName(nik);
+		
+		for (Object[] obj : qr) {
+			AttendanceDto attendanceDto = new AttendanceDto();
+			Attendance mdl = new Attendance();
+			mdl = (Attendance) obj[0];
+			
+			attendanceDto = mapperFacade.map(mdl, AttendanceDto.class);
+			attendanceDto.setName((String) obj[1]);
+			attendanceDto.setEmail((String) obj[2]);
+			attendanceDtos.add(attendanceDto);
+		}
+		return attendanceDtos;
+	}
+
+	@Override
+	public int save(AttendanceDto isi) {
+		// TODO Auto-generated method stub
+		int t = attendanceDao.updateTimesheet(isi.getHours(), isi.getActivity(), isi.getAttendanceDate(), isi.getNik());
+		return t;
+	}
 }

@@ -14,6 +14,7 @@ public class AttendanceDto {
 	private String name;
 	private String email;
 	private String total;
+	private String hours;
 	private String activity;
 	private boolean isCheckin;
 	
@@ -119,6 +120,14 @@ public class AttendanceDto {
 
 	public void setActivity(String activity) {
 		this.activity = activity;
+	}
+
+	public String getHours() {
+		return hours;
+	}
+
+	public void setHours(String hours) {
+		this.hours = hours;
 	}
 	
 

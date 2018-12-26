@@ -29,6 +29,40 @@ public class AttendanceCtl {
 		return restResponse;
 	}
 	
+	@RequestMapping(value = "/saveTimesheet", method = RequestMethod.POST)
+	public RestResponse saveTimesheet(@RequestBody AttendanceDto payload){
+		RestResponse restResponse = new RestResponse();
+		int i = attendanceSvc.save(payload);
+		if (i == 1) {
+			restResponse.setMessage("success");
+			restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+			restResponse.setContents(null);
+		} else {
+			restResponse.setMessage("success");
+			restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+			restResponse.setContents(null);
+		}
+		;
+		return restResponse;
+	}
+	
+	@RequestMapping(value = "/allWithMember", method = RequestMethod.GET)
+	public RestResponse getAllWithMember(){
+		RestResponse restResponse = new RestResponse();
+		restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+		restResponse.setContents(attendanceSvc.getAllWithMember());
+		return restResponse;
+	}
+	
+	@RequestMapping(value = "/allWithName", method = RequestMethod.POST)
+	public RestResponse getallWithName(@RequestBody AttendanceDto payload){
+		System.out.println("check nik : "+payload.getNik());
+		RestResponse restResponse = new RestResponse();
+		restResponse.setStatus(CommonConstants.OK_REST_STATUS);
+		restResponse.setContents(attendanceSvc.getWithName(payload.getNik()));
+		return restResponse;
+	}
+	
 	@RequestMapping(value = "/searchAttendance/{nik}", method = RequestMethod.GET)
 	public RestResponse search(@PathVariable("nik") String nik){
 		RestResponse restResponse = new RestResponse();
